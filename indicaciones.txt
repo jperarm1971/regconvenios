@@ -1,0 +1,46 @@
+Lo primero que hay que hacer es activar el entorno virtual.
+
+env\Scripts\activate.bat
+
+Para ejecutarf el servidor: flask run
+
+
+1. Toda aplicación Flask es una instancia WSGI de la clase Flask. Por tanto, importamos dicha clase
+ y creamos una instancia que en este caso he llamado app. Para crear dicha instancia, debemos pasar 
+ como primer argumento el nombre del módulo o paquete de la aplicación. Para estar seguros de ello, 
+ utilizaremos la palabra reservada __name__. Esto es necesario para que Flask sepa, por ejemplo, donde 
+ encontrar las plantillas de nuestra aplicación o los ficheros estáticos.
+2. Una característica de Flask es que tendremos métodos asociados a las distintas URLs que componen 
+nuestra aplicación. Es en estos métodos donde ocurre toda la magia y toda la lógica que queramos 
+implementar. Dentro del patrón MVC, esta parte del código se correspondería con el controlador.
+ Flask se encarga de hacernos transparente el cómo a partir de una petición a una URL se ejecuta 
+ finalmente nuestra rutina. Lo único que tendremos que hacer nosotros será añadir un decorador a 
+ nuestra función. En nuestro caso, hemos llamado a nuestra función hello_world que será invocada 
+ cada vez que se haga una petición a la URL raíz de nuestra aplicación.
+3. El decorador route de la aplicación (app) es el encargado de decirle a Flask qué URL debe ejecutar
+ su correspondiente función.
+4. El nombre que le demos a nuestra función será usado para generar internamente URLs a partir de 
+dicha función (esto lo veremos más adelante).
+5. Finalmente, la función debe devolver la respuesta que será mostrada en el navegador del usuario.
+
+
+
+Creando la vista que muestra el detalle de un post
+En una aplicación web no todas las páginas tienen una URL definida de antemano, 
+como es el caso de la página principal. Por ejemplo, en nuestro blog cada post tendrá una URL
+ única que se generará dinámicamente. Sin embargo, no vamos a tener una vista por cada URL que se 
+ genere. Vamos a tener una única vista que se encargará de recoger un parámetro que identifique
+  al post que queremos mostrar y, en base a dicho parámetro, recuperar el post para finalmente 
+  mostrarlo al usuario.
+
+Para hacer esto, a una URL le podemos añadir secciones variables o parametrizadas con <param>.
+ La vista recibirá <param> como un parámetro con ese mismo nombre. Opcionalmente se puede indicar 
+ un conversor (converter) para especificar el tipo de dicho parámetro así <converter:param>.
+
+Por defecto, en Flask existen los siguientes conversores:
+
+– string: Es el conversor por defecto. Acepta cualquier cadena que no contenga el carácter ‘/’.
+– int: Acepta números enteros positivos.
+– float: Acepta números en punto flotante positivos.
+– path: Es como string pero acepta cadenas con el carácter ‘/’.
+– uuid:  Acepta cadenas con formato UUID.
